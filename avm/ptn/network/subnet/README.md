@@ -109,27 +109,74 @@ This instance deploys the module with most of its features enabled.
 <summary>via Bicep module</summary>
 
 ```bicep
-module privateLinkPrivateDnsZones 'br/public:avm/ptn/network/private-link-private-dns-zones:<version>' = {
-  name: 'privateLinkPrivateDnsZonesDeployment'
+module subnet 'br/public:avm/ptn/network/subnet:<version>' = {
+  name: 'subnetDeployment'
   params: {
-    location: '<location>'
-    lock: {
-      kind: 'CanNotDelete'
-      name: 'pdnsZonesLock'
-    }
-    privateLinkPrivateDnsZones: [
-      'testpdnszone1.int'
-      'testpdnszone2.local'
+    // Required parameters
+    addressPrefix: '<addressPrefix>'
+    name: 'subnet'
+    virtualNetworkResourceId: '<virtualNetworkResourceId>'
+    // Non-required parameters
+    defaultOutboundAccess: true
+    delegations: [
+      {
+        name: 'delegation-1'
+        properties: {
+          actions: [
+            'Microsoft.Network/virtualNetworks/subnets/action'
+          ]
+          serviceName: 'Microsoft.ContainerInstance/containerGroups'
+        }
+      }
     ]
-    tags: {
-      Environment: 'Example'
-      'hidden-title': 'This is visible in the resource name'
-      Role: 'DeploymentValidation'
-    }
-    virtualNetworkResourceIdsToLinkTo: [
-      '<vnetResourceId>'
+    disableBgpRoutePropagation: false
+    location: 'eastus'
+     lock: {
+       kind: 'CanNotDelete'
+       name: 'lock-1'
+     }
+    networkSecurityGroupName: 'nsg-1'
+    privateLinkServiceNetworkPolicies: 'Disabled'
+    routes: [
+      {
+        name: 'route-1'
+        properties: {
+          addressPrefix: '0.0.0.0/0'
+          hasBgpOverride: false
+          nextHopIpAddress: ''
+          nextHopType: 'Internet'
+        }
+      }
     ]
-  }
+    routeTableName: 'routeTable-1'
+    securityRules: [
+      {
+        name: 'rule-1'
+        properties: {
+          access: 'Allow'
+          description: 'Allow all traffic'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '*'
+          direction: 'Inbound'
+          priority: 100
+          protocol: 'Tcp'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+        }
+      }
+    ]
+    serviceEndpoints: [
+      {
+        locations: [
+          'eastus'
+        ]
+        service: 'Microsoft.Storage'
+      }
+     ]
+     tags: {
+      environment: 'test'
+     }
+   }
 }
 ```
 
@@ -145,34 +192,102 @@ module privateLinkPrivateDnsZones 'br/public:avm/ptn/network/private-link-privat
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "location": {
-      "value": "<location>"
+    // Required parameters
+    "addressPrefix": {
+      "value": "<addressPrefix>"
     },
-    "lock": {
-      "value": {
-        "kind": "CanNotDelete",
-        "name": "pdnsZonesLock"
-      }
+    "name": {
+      "value": "subnet"
     },
-    "privateLinkPrivateDnsZones": {
+    "virtualNetworkResourceId": {
+      "value": "<virtualNetworkResourceId>"
+    },
+    // Non-required parameters
+    "defaultOutboundAccess": {
+      "value": true
+    },
+    "delegations": {
       "value": [
-        "testpdnszone1.int",
-        "testpdnszone2.local"
+        {
+          "name": "delegation-1",
+          "properties": {
+            "actions": [
+              "Microsoft.Network/virtualNetworks/subnets/action"
+            ],
+            "serviceName": "Microsoft.ContainerInstance/containerGroups"
+          }
+        }
       ]
+    },
+    "disableBgpRoutePropagation": {
+      "value": false
+    },
+     "location": {
+      "value": "eastus"
+     },
+     "lock": {
+       "value": {
+         "kind": "CanNotDelete",
+         "name": "lock-1"
+       }
+     },
+    "networkSecurityGroupName": {
+      "value": "nsg-1"
+    },
+    "privateLinkServiceNetworkPolicies": {
+      "value": "Disabled"
+    },
+    "routes": {
+       "value": [
+        {
+          "name": "route-1",
+          "properties": {
+            "addressPrefix": "0.0.0.0/0",
+            "hasBgpOverride": false,
+            "nextHopIpAddress": "",
+            "nextHopType": "Internet"
+          }
+        }
+       ]
+     },
+
+    "routeTableName": {
+      "value": "routeTable-1"
+    },
+    "securityRules": {
+      "value": [
+        {
+          "name": "rule-1",
+          "properties": {
+            "access": "Allow",
+            "description": "Allow all traffic",
+            "destinationAddressPrefix": "*",
+            "destinationPortRange": "*",
+            "direction": "Inbound",
+            "priority": 100,
+            "protocol": "Tcp",
+            "sourceAddressPrefix": "*",
+            "sourcePortRange": "*"
+          }
+        }
+      ]
+     },
+    "serviceEndpoints": {
+       "value": [
+        {
+          "locations": [
+            "eastus"
+          ],
+          "service": "Microsoft.Storage"
+        }
+       ]
     },
     "tags": {
       "value": {
-        "Environment": "Example",
-        "hidden-title": "This is visible in the resource name",
-        "Role": "DeploymentValidation"
+        "environment": "test"
       }
-    },
-    "virtualNetworkResourceIdsToLinkTo": {
-      "value": [
-        "<vnetResourceId>"
-      ]
-    }
-  }
+     }
+   }
 }
 ```
 
@@ -184,84 +299,8 @@ module privateLinkPrivateDnsZones 'br/public:avm/ptn/network/private-link-privat
 <summary>via Bicep parameters file</summary>
 
 ```bicep-params
-using 'br/public:avm/ptn/network/private-link-private-dns-zones:<version>'
+using 'br/public:avm/ptn/network/subnet:<version>'
 
-param location = '<location>'
-param lock = {
-  kind: 'CanNotDelete'
-  name: 'pdnsZonesLock'
-}
-param privateLinkPrivateDnsZones = [
-  'testpdnszone1.int'
-  'testpdnszone2.local'
-]
-param tags = {
-  Environment: 'Example'
-  'hidden-title': 'This is visible in the resource name'
-  Role: 'DeploymentValidation'
-}
-param virtualNetworkResourceIdsToLinkTo = [
-  '<vnetResourceId>'
-]
-```
-
-</details>
-<p>
-
-### Example 3: _WAF-aligned_
-
-This instance deploys the module in alignment with the best-practices of the Well-Architected Framework.
-
-
-<details>
-
-<summary>via Bicep module</summary>
-
-```bicep
-module privateLinkPrivateDnsZones 'br/public:avm/ptn/network/private-link-private-dns-zones:<version>' = {
-  name: 'privateLinkPrivateDnsZonesDeployment'
-  params: {
-    virtualNetworkResourceIdsToLinkTo: [
-      '<vnetResourceId>'
-    ]
-  }
-}
-```
-
-</details>
-<p>
-
-<details>
-
-<summary>via JSON parameters file</summary>
-
-```json
-{
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "virtualNetworkResourceIdsToLinkTo": {
-      "value": [
-        "<vnetResourceId>"
-      ]
-    }
-  }
-}
-```
-
-</details>
-<p>
-
-<details>
-
-<summary>via Bicep parameters file</summary>
-
-```bicep-params
-using 'br/public:avm/ptn/network/private-link-private-dns-zones:<version>'
-
-param virtualNetworkResourceIdsToLinkTo = [
-  '<vnetResourceId>'
-]
 ```
 
 </details>
