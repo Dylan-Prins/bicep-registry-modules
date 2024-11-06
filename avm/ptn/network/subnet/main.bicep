@@ -34,7 +34,7 @@ param defaultOutboundAccess bool = false
 ])
 param privateLinkServiceNetworkPolicies string = 'Disabled'
 
-@description('The delegations for the subnet.')
+@description('Optional. The delegations for the subnet.')
 param delegations array = []
 
 @description('Optional. An array of service endpoints.')
