@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.30.23.60470",
-      "templateHash": "13136546953030330130"
+      "templateHash": "16451414260538749994"
     },
     "name": "avm/ptn/network/subnet",
     "description": "Subnet module for landingzones with existing VNETs",
@@ -405,7 +405,7 @@
       "type": "array",
       "defaultValue": [],
       "metadata": {
-        "description": "The delegations for the subnet."
+        "description": "Optional. The delegations for the subnet."
       }
     },
     "serviceEndpoints": {
