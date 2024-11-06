@@ -248,8 +248,8 @@ module subnet 'br/public:avm/ptn/network/subnet:<version>' = {
             "nextHopType": "Internet"
           }
         }
-       ]
-     },
+      ]
+    },
     "routeTableName": {
       "value": "routeTable-1"
     },
@@ -270,23 +270,23 @@ module subnet 'br/public:avm/ptn/network/subnet:<version>' = {
           }
         }
       ]
-     },
+    },
     "serviceEndpoints": {
-       "value": [
+      "value": [
         {
           "locations": [
             "eastus"
           ],
           "service": "Microsoft.Storage"
         }
-       ]
+      ]
     },
     "tags": {
       "value": {
         "environment": "test"
       }
-     }
-   }
+    }
+  }
 }
 ```
 
