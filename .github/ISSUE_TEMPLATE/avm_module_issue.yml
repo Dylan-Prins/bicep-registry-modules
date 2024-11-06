@@ -64,6 +64,7 @@ body:
         - "avm/ptn/lz/sub-vending"
         - "avm/ptn/network/hub-networking"
         - "avm/ptn/network/private-link-private-dns-zones"
+        - "avm/ptn/network/subnet"
         - "avm/ptn/policy-insights/remediation"
         - "avm/ptn/security/security-center"
         - "avm/ptn/virtual-machine-images/azure-image-builder"
