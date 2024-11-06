@@ -114,7 +114,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = {
       : null
     routeTable: !empty(routes)
       ? {
-          id:  routeTable.outputs.resourceId
+          id: routeTable.outputs.resourceId
         }
       : null
     defaultOutboundAccess: defaultOutboundAccess
@@ -143,8 +143,6 @@ output resourceGroupResourceId string = resourceGroup().id
 
 @description('The name of the resource group that the Private DNS Zones are deployed into.')
 output resourceGroupName string = resourceGroup().name
-
-
 
 type routeType = {
   @description('Required. Name of the route.')
