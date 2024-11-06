@@ -15,10 +15,10 @@ param tags object?
 @description('Optional. Enable/Disable usage telemetry for module.')
 param enableTelemetry bool = true
 
-@description('Required. name of the subnet')
+@description('Required. name of the subnet.')
 param name string
 
-@description('Required. address prefix of the subnet')
+@description('Required. address prefix of the subnet.')
 param addressPrefix string
 
 @description('Required. ID of the virtual network.')
@@ -81,7 +81,7 @@ module networkSecurityGroup 'br/public:avm/res/network/network-security-group:0.
 
 #disable-next-line no-deployments-resources
 resource avmTelemetry 'Microsoft.Resources/deployments@2023-07-01' = if (enableTelemetry) {
-  name: '46d3xbcp.ptn.network-privatelinkprivatednszones.${replace('-..--..-', '.', '-')}.${substring(uniqueString(deployment().name, location), 0, 4)}'
+  name: '46d3xbcp.ptn.network-subnet.${replace('-..--..-', '.', '-')}.${substring(uniqueString(deployment().name, location), 0, 4)}'
   properties: {
     mode: 'Incremental'
     template: {
