@@ -130,7 +130,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = {
 // ============ //
 
 @description('The resource ID of the subnet.')
-output ResourceId string = subnet.id
+output resourceId string = subnet.id
 
 @description('The name of the subnet.')
 output name string = subnet.name

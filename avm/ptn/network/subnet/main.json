@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.30.23.60470",
-      "templateHash": "16451414260538749994"
+      "templateHash": "3778199710483705750"
     },
     "name": "avm/ptn/network/subnet",
     "description": "Subnet module for landingzones with existing VNETs",
@@ -368,13 +368,13 @@
     "name": {
       "type": "string",
       "metadata": {
-        "description": "Required. name of the subnet"
+        "description": "Required. name of the subnet."
       }
     },
     "addressPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Required. address prefix of the subnet"
+        "description": "Required. address prefix of the subnet."
       }
     },
     "virtualNetworkResourceId": {
@@ -454,7 +454,7 @@
       "condition": "[parameters('enableTelemetry')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2023-07-01",
-      "name": "[format('46d3xbcp.ptn.network-privatelinkprivatednszones.{0}.{1}', replace('-..--..-', '.', '-'), substring(uniqueString(deployment().name, parameters('location')), 0, 4))]",
+      "name": "[format('46d3xbcp.ptn.network-subnet.{0}.{1}', replace('-..--..-', '.', '-'), substring(uniqueString(deployment().name, parameters('location')), 0, 4))]",
       "properties": {
         "mode": "Incremental",
         "template": {
@@ -1505,7 +1505,7 @@
     }
   },
   "outputs": {
-    "ResourceId": {
+    "resourceId": {
       "type": "string",
       "metadata": {
         "description": "The resource ID of the subnet."
